@@ -14,6 +14,8 @@
 		E949CBF31D35D9A9002A70AD /* SBVideoPlayer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E949CBF11D35D9A9002A70AD /* SBVideoPlayer.xcdatamodeld */; };
 		E949CBF51D35D9A9002A70AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E949CBF41D35D9A9002A70AD /* Assets.xcassets */; };
 		E949CBF81D35D9A9002A70AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E949CBF61D35D9A9002A70AD /* LaunchScreen.storyboard */; };
+		E995C5B91D474211001185D1 /* SBVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E995C5B81D474211001185D1 /* SBVideoPlayer.m */; };
+		E995C5BC1D475B4F001185D1 /* SBVideoControllView.m in Sources */ = {isa = PBXBuildFile; fileRef = E995C5BB1D475B4F001185D1 /* SBVideoControllView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,10 @@
 		E949CBF41D35D9A9002A70AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E949CBF71D35D9A9002A70AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E949CBF91D35D9A9002A70AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E995C5B71D474211001185D1 /* SBVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBVideoPlayer.h; sourceTree = "<group>"; };
+		E995C5B81D474211001185D1 /* SBVideoPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBVideoPlayer.m; sourceTree = "<group>"; };
+		E995C5BA1D475B4F001185D1 /* SBVideoControllView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBVideoControllView.h; sourceTree = "<group>"; };
+		E995C5BB1D475B4F001185D1 /* SBVideoControllView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBVideoControllView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +66,7 @@
 		E949CBE41D35D9A9002A70AD /* SBVideoPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				E995C5B61D474211001185D1 /* SBVideoPlayer */,
 				E949CBE81D35D9A9002A70AD /* AppDelegate.h */,
 				E949CBE91D35D9A9002A70AD /* AppDelegate.m */,
 				E949CBEB1D35D9A9002A70AD /* ViewController.h */,
@@ -80,6 +87,17 @@
 				E949CBE61D35D9A9002A70AD /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E995C5B61D474211001185D1 /* SBVideoPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				E995C5B71D474211001185D1 /* SBVideoPlayer.h */,
+				E995C5B81D474211001185D1 /* SBVideoPlayer.m */,
+				E995C5BA1D475B4F001185D1 /* SBVideoControllView.h */,
+				E995C5BB1D475B4F001185D1 /* SBVideoControllView.m */,
+			);
+			path = SBVideoPlayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,6 +172,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E949CBED1D35D9A9002A70AD /* ViewController.m in Sources */,
+				E995C5B91D474211001185D1 /* SBVideoPlayer.m in Sources */,
+				E995C5BC1D475B4F001185D1 /* SBVideoControllView.m in Sources */,
 				E949CBEA1D35D9A9002A70AD /* AppDelegate.m in Sources */,
 				E949CBE71D35D9A9002A70AD /* main.m in Sources */,
 				E949CBF31D35D9A9002A70AD /* SBVideoPlayer.xcdatamodeld in Sources */,
@@ -270,10 +290,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SBVideoPlayer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bigbo.SBVideoPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -281,10 +305,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SBVideoPlayer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bigbo.SBVideoPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -307,6 +335,7 @@
 				E949CBFE1D35D9A9002A70AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

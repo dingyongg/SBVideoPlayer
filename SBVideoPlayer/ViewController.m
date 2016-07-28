@@ -6,9 +6,17 @@
 //  Copyright © 2016年 bigbomac02. All rights reserved.
 //
 
+#define video_url_str @"http://test.starbuyer.com/upload/2016/06/29/1467193552.mp4"
+
 #import "ViewController.h"
 
-@interface ViewController ()
+#import "SBVideoPlayer.h"
+
+
+
+@interface ViewController (){
+    SBVideoPlayer *videoPlayer;
+}
 
 @end
 
@@ -16,7 +24,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    if (!videoPlayer) {
+        videoPlayer = [[SBVideoPlayer alloc]initWithURL:[NSURL URLWithString:video_url_str]];
+        videoPlayer.backgroundColor = [UIColor blackColor];
+        videoPlayer.frame = CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.width);
+        [self.view addSubview:videoPlayer];
+    }else{
+        
+        [videoPlayer.player play];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
