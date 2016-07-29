@@ -25,6 +25,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ab) name:@"SBVideoIsGoingToPlay" object:nil];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
@@ -37,6 +39,14 @@
         
         [videoPlayer.player play];
     }
+}
+
+
+- (void)ab{
+    
+    NSLog(@"SBVideoIsGoingToPlay");
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {

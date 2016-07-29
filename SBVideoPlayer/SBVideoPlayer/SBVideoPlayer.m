@@ -27,7 +27,7 @@
     if (self) {
         self.URL = URL;
         [self creatController];
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(enablePlay) name:AVPlayerItemNewAccessLogEntryNotification object:nil];
+        //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(enablePlay) name:AVPlayerItemNewAccessLogEntryNotification object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(unablePlay) name:AVPlayerItemPlaybackStalledNotification object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playToEnd) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     }
@@ -50,8 +50,8 @@
     
     self.playerItem  = [AVPlayerItem playerItemWithURL:URL];
     self.player = [AVPlayer playerWithPlayerItem:_playerItem];
-    
-    [_player addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
+    [self play];
+    //[_player addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
     
     [self.player addPeriodicTimeObserverForInterval:CMTimeMake(1.0, 1.0) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
         NSLog(@"你好");
@@ -65,8 +65,8 @@
 - (void)setPlayerItem:(AVPlayerItem *)playerItem{
     
     _playerItem = playerItem;
-    
-    //[_playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
+    //_playerItem.playbackLikelyToKeepUp
+    [_playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
     [_playerItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];
     [_playerItem addObserver:self forKeyPath:@"playbackLikelyToKeepUp" options:NSKeyValueObservingOptionNew context:nil];
 }
@@ -103,13 +103,11 @@
         }
         if (status==AVPlayerStatusReadyToPlay) {
             NSLog(@"AVPlayerStatusReadyToPlay");
-            [self play];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"SBVideoIsGoingToPlay" object:object userInfo:nil];
         }
         if (status==AVPlayerStatusFailed) {
             NSLog(@"AVPlayerStatusFailed");
         }
-        
-        NSLog(@"%ld", (long)status);
         
     }else if([keyPath isEqualToString:@"loadedTimeRanges"]){
         
@@ -131,9 +129,9 @@
         
     }else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"]){
         
-        BOOL status = [[change objectForKey:@"new"] intValue];
-        if (status && _state==SBVideoPlayerStatePause)
-        {
+        BOOL status = [[change objectForKey:@"playbackLikelyToKeepUp"] intValue];
+        if (status && _state==SBVideoPlayerStatePause){
+            NSLog(@"playbackLikelyToKeepUp");
             [self play];
         }
 
@@ -142,7 +140,6 @@
 
 - (void)enablePlay{
     NSLog(@"可以播放了");
-   
 }
 
 - (void)unablePlay{
