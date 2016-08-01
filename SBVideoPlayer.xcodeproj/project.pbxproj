@@ -14,6 +14,11 @@
 		E949CBF31D35D9A9002A70AD /* SBVideoPlayer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E949CBF11D35D9A9002A70AD /* SBVideoPlayer.xcdatamodeld */; };
 		E949CBF51D35D9A9002A70AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E949CBF41D35D9A9002A70AD /* Assets.xcassets */; };
 		E949CBF81D35D9A9002A70AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E949CBF61D35D9A9002A70AD /* LaunchScreen.storyboard */; };
+		E957687D1D4EFF41000CC0BF /* SBPlaybackButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E957687C1D4EFF41000CC0BF /* SBPlaybackButton.m */; };
+		E95768831D4F0535000CC0BF /* moviePause.png in Resources */ = {isa = PBXBuildFile; fileRef = E957687F1D4F0535000CC0BF /* moviePause.png */; };
+		E95768841D4F0535000CC0BF /* moviePause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E95768801D4F0535000CC0BF /* moviePause@2x.png */; };
+		E95768851D4F0535000CC0BF /* moviePlay.png in Resources */ = {isa = PBXBuildFile; fileRef = E95768811D4F0535000CC0BF /* moviePlay.png */; };
+		E95768861D4F0535000CC0BF /* moviePlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E95768821D4F0535000CC0BF /* moviePlay@2x.png */; };
 		E995C5B91D474211001185D1 /* SBVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E995C5B81D474211001185D1 /* SBVideoPlayer.m */; };
 		E995C5BC1D475B4F001185D1 /* SBVideoControllView.m in Sources */ = {isa = PBXBuildFile; fileRef = E995C5BB1D475B4F001185D1 /* SBVideoControllView.m */; };
 /* End PBXBuildFile section */
@@ -30,6 +35,12 @@
 		E949CBF41D35D9A9002A70AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E949CBF71D35D9A9002A70AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E949CBF91D35D9A9002A70AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E957687B1D4EFF41000CC0BF /* SBPlaybackButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBPlaybackButton.h; sourceTree = "<group>"; };
+		E957687C1D4EFF41000CC0BF /* SBPlaybackButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBPlaybackButton.m; sourceTree = "<group>"; };
+		E957687F1D4F0535000CC0BF /* moviePause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moviePause.png; sourceTree = "<group>"; };
+		E95768801D4F0535000CC0BF /* moviePause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moviePause@2x.png"; sourceTree = "<group>"; };
+		E95768811D4F0535000CC0BF /* moviePlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moviePlay.png; sourceTree = "<group>"; };
+		E95768821D4F0535000CC0BF /* moviePlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moviePlay@2x.png"; sourceTree = "<group>"; };
 		E995C5B71D474211001185D1 /* SBVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBVideoPlayer.h; sourceTree = "<group>"; };
 		E995C5B81D474211001185D1 /* SBVideoPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBVideoPlayer.m; sourceTree = "<group>"; };
 		E995C5BA1D475B4F001185D1 /* SBVideoControllView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBVideoControllView.h; sourceTree = "<group>"; };
@@ -89,13 +100,27 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		E957687E1D4F0535000CC0BF /* images */ = {
+			isa = PBXGroup;
+			children = (
+				E957687F1D4F0535000CC0BF /* moviePause.png */,
+				E95768801D4F0535000CC0BF /* moviePause@2x.png */,
+				E95768811D4F0535000CC0BF /* moviePlay.png */,
+				E95768821D4F0535000CC0BF /* moviePlay@2x.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 		E995C5B61D474211001185D1 /* SBVideoPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				E957687E1D4F0535000CC0BF /* images */,
 				E995C5B71D474211001185D1 /* SBVideoPlayer.h */,
 				E995C5B81D474211001185D1 /* SBVideoPlayer.m */,
 				E995C5BA1D475B4F001185D1 /* SBVideoControllView.h */,
 				E995C5BB1D475B4F001185D1 /* SBVideoControllView.m */,
+				E957687B1D4EFF41000CC0BF /* SBPlaybackButton.h */,
+				E957687C1D4EFF41000CC0BF /* SBPlaybackButton.m */,
 			);
 			path = SBVideoPlayer;
 			sourceTree = "<group>";
@@ -158,9 +183,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E95768861D4F0535000CC0BF /* moviePlay@2x.png in Resources */,
 				E949CBF81D35D9A9002A70AD /* LaunchScreen.storyboard in Resources */,
 				E949CBF51D35D9A9002A70AD /* Assets.xcassets in Resources */,
+				E95768841D4F0535000CC0BF /* moviePause@2x.png in Resources */,
 				E949CBF01D35D9A9002A70AD /* Main.storyboard in Resources */,
+				E95768851D4F0535000CC0BF /* moviePlay.png in Resources */,
+				E95768831D4F0535000CC0BF /* moviePause.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +202,7 @@
 			files = (
 				E949CBED1D35D9A9002A70AD /* ViewController.m in Sources */,
 				E995C5B91D474211001185D1 /* SBVideoPlayer.m in Sources */,
+				E957687D1D4EFF41000CC0BF /* SBPlaybackButton.m in Sources */,
 				E995C5BC1D475B4F001185D1 /* SBVideoControllView.m in Sources */,
 				E949CBEA1D35D9A9002A70AD /* AppDelegate.m in Sources */,
 				E949CBE71D35D9A9002A70AD /* main.m in Sources */,

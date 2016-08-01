@@ -7,6 +7,15 @@
 //
 
 #import "SBVideoControllView.h"
+#import "SBPlaybackButton.h"
+
+
+@interface SBVideoControllView ()
+
+@property(strong ,nonatomic) UIView *containerV;
+@property(strong, nonatomic) SBPlaybackButton *playbackButton;
+
+@end
 
 @implementation SBVideoControllView
 
@@ -15,14 +24,42 @@
     self = [super init];
     if (self) {
         self.player = player;
-        self.backgroundColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:.8];
+        [self initBottomLayout];
+
     }
     return self;
 }
 
 - (void)setPlayer:(SBVideoPlayer *)player{
     _player = player;
+   
+    
+}
 
+- (void)setFrame:(CGRect)frame{
+    [super setFrame:frame];
+    _containerV.frame = CGRectMake(0, frame.size.height-35, frame.size.width, 35);
+    _playbackButton.frame = CGRectMake(0, 0, 35, 35);
+}
+
+- (void)initBottomLayout{
+    
+    _containerV = [[UIView alloc]initWithFrame:CGRectZero];
+    [_containerV setBackgroundColor:[UIColor clearColor]];
+    _containerV.layer.borderColor = [UIColor redColor].CGColor;
+    _containerV.layer.borderWidth = 1;
+    _containerV.layer.masksToBounds = YES;
+    
+    _playbackButton = [[SBPlaybackButton alloc]init];
+    [_playbackButton addTarget:self action:@selector(playbackButtonAction) forControlEvents:UIControlEventTouchUpInside];
+    [_containerV addSubview:_playbackButton];
+    
+    [self addSubview:_containerV];
+}
+
+- (void)playbackButtonAction{
+    
+    NSLog(@"tap");
     
 }
 

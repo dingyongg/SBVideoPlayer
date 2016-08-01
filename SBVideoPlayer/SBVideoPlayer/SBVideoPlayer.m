@@ -10,11 +10,12 @@
 #import "SBVideoControllView.h"
 
 @interface SBVideoPlayer ()
-
+@property (strong ,nonatomic) UIView* containerV;
+@property (strong, nonatomic) SBVideoControllView *controllView;
 @property (strong, nonatomic) AVPlayerItem *playerItem;
 @property (strong, nonatomic) AVPlayerLayer *playerLayer;
 @property (strong, nonatomic) AVAsset *asset;
-@property (strong, nonatomic) SBVideoControllView *controllView;
+
 
 @end
 
@@ -25,6 +26,7 @@
 - (instancetype)initWithURL:(NSURL *)URL{
     self = [super init];
     if (self) {
+        [self creatContainerView];
         self.URL = URL;
         [self creatController];
         //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(enablePlay) name:AVPlayerItemNewAccessLogEntryNotification object:nil];
@@ -39,25 +41,27 @@
 
 - (void)setFrame:(CGRect)frame{
     [super setFrame:frame];
-    self.playerLayer.frame = self.bounds;
-    [self.layer addSublayer:_playerLayer];
+    _playerLayer.frame = self.bounds;
+    _containerV.frame = self.bounds;
     _controllView.frame = self.bounds;
 }
 
 - (void)setURL:(NSURL *)URL{
     _URL = URL;
-    self.asset = [AVAsset assetWithURL:URL];
+    //self.asset = [AVAsset assetWithURL:URL];
     
     self.playerItem  = [AVPlayerItem playerItemWithURL:URL];
     self.player = [AVPlayer playerWithPlayerItem:_playerItem];
     [self play];
-    //[_player addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
     
+    __weak SBVideoPlayer *weakSelf = self;
     [self.player addPeriodicTimeObserverForInterval:CMTimeMake(1.0, 1.0) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
-        NSLog(@"你好");
+        weakSelf.current_time =  CMTimeGetSeconds(time);
+        NSLog(@"%f", CMTimeGetSeconds(time));
     }];
     
     self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
+    [_containerV.layer addSublayer:_playerLayer];
     self.playerLayer.videoGravity = AVLayerVideoGravityResize;
     
 }
@@ -65,10 +69,10 @@
 - (void)setPlayerItem:(AVPlayerItem *)playerItem{
     
     _playerItem = playerItem;
-    //_playerItem.playbackLikelyToKeepUp
     [_playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
     [_playerItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];
     [_playerItem addObserver:self forKeyPath:@"playbackLikelyToKeepUp" options:NSKeyValueObservingOptionNew context:nil];
+    
 }
 
 
@@ -84,11 +88,15 @@
 //}
 
 
+- (void)creatContainerView{
+    _containerV = [[UIView alloc]initWithFrame:CGRectZero];
+    _containerV.backgroundColor = [UIColor clearColor];
+    [self addSubview:_containerV];
+}
+
 - (void)creatController{
     _controllView = [[SBVideoControllView alloc]initWithPlayer:self];
-    _controllView.frame = CGRectZero;
     [self addSubview:_controllView];
-    
 }
 
 
@@ -132,7 +140,7 @@
         BOOL status = [[change objectForKey:@"playbackLikelyToKeepUp"] intValue];
         if (status && _state==SBVideoPlayerStatePause){
             NSLog(@"playbackLikelyToKeepUp");
-            [self play];
+            //[self play];
         }
 
     }

@@ -10,13 +10,10 @@
 #import <AVFoundation/AVFoundation.h>
 
 typedef enum {
-    
     SBVideoPlayerStatePlaying,
-    
     SBVideoPlayerStatePause,
  
 } SBVideoPlayerState;
-
 
 @interface SBVideoPlayer : UIView
 
@@ -27,6 +24,11 @@ typedef enum {
 @property (strong, nonatomic) AVPlayer *player;
 
 @property (nonatomic, assign, readonly) SBVideoPlayerState state;
+
+
+@property (nonatomic, assign) float current_time;
+
+@property (nonatomic, assign) float current_loaded_time;
 
 - (void)play;
 - (void)pause;

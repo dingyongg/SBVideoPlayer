@@ -37,7 +37,7 @@
         [self.view addSubview:videoPlayer];
     }else{
         
-        [videoPlayer.player play];
+        [videoPlayer play];
     }
 }
 
