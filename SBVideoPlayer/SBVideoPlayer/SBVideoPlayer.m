@@ -12,7 +12,7 @@
 @interface SBVideoPlayer ()
 @property (strong ,nonatomic) UIView* containerV;
 @property (strong, nonatomic) SBVideoControllView *controllView;
-@property (strong, nonatomic) AVPlayerItem *playerItem;
+//@property (strong, nonatomic) AVPlayerItem *playerItem;
 @property (strong, nonatomic) AVPlayerLayer *playerLayer;
 @property (strong, nonatomic) AVAsset *asset;
 
@@ -55,7 +55,7 @@
     [self play];
     
     __weak SBVideoPlayer *weakSelf = self;
-    [self.player addPeriodicTimeObserverForInterval:CMTimeMake(1.0, 1.0) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
+    [self.player addPeriodicTimeObserverForInterval:CMTimeMake(3, 30) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
         weakSelf.current_time =  CMTimeGetSeconds(time);
         NSLog(@"%f", CMTimeGetSeconds(time));
     }];
@@ -131,13 +131,13 @@
         
         //缓冲总长度
         
-        NSTimeInterval totalBuffer = startSeconds + durationSeconds;
-        
+        float totalBuffer = startSeconds + durationSeconds;
+        self.current_loaded_time = totalBuffer;
         NSLog(@"共缓存：%.2f",totalBuffer);
         
     }else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"]){
         
-        BOOL status = [[change objectForKey:@"playbackLikelyToKeepUp"] intValue];
+        BOOL status = [[change objectForKey:@"new"] intValue];
         if (status && _state==SBVideoPlayerStatePause){
             NSLog(@"playbackLikelyToKeepUp");
             //[self play];

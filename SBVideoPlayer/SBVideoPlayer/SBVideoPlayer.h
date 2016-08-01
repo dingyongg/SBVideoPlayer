@@ -22,7 +22,7 @@ typedef enum {
 @property(strong, nonatomic) NSURL *URL;
 
 @property (strong, nonatomic) AVPlayer *player;
-
+@property (strong, nonatomic) AVPlayerItem *playerItem;
 @property (nonatomic, assign, readonly) SBVideoPlayerState state;
 
 
