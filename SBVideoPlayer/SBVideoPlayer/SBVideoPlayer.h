@@ -12,7 +12,7 @@
 typedef enum {
     SBVideoPlayerStatePlaying,
     SBVideoPlayerStatePause,
- 
+    SBVideoPlayerStateStalled,
 } SBVideoPlayerState;
 
 @interface SBVideoPlayer : UIView
@@ -23,7 +23,7 @@ typedef enum {
 
 @property (strong, nonatomic) AVPlayer *player;
 @property (strong, nonatomic) AVPlayerItem *playerItem;
-@property (nonatomic, assign, readonly) SBVideoPlayerState state;
+@property (nonatomic, assign) SBVideoPlayerState state;
 
 
 @property (nonatomic, assign) float current_time;

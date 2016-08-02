@@ -29,7 +29,7 @@
         [self creatContainerView];
         self.URL = URL;
         [self creatController];
-        //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(enablePlay) name:AVPlayerItemNewAccessLogEntryNotification object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(enablePlay) name:AVPlayerItemNewAccessLogEntryNotification object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(unablePlay) name:AVPlayerItemPlaybackStalledNotification object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playToEnd) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     }
@@ -49,15 +49,15 @@
 - (void)setURL:(NSURL *)URL{
     _URL = URL;
     //self.asset = [AVAsset assetWithURL:URL];
-    
+
     self.playerItem  = [AVPlayerItem playerItemWithURL:URL];
     self.player = [AVPlayer playerWithPlayerItem:_playerItem];
-    [self play];
+    self.state = SBVideoPlayerStateStalled;
     
     __weak SBVideoPlayer *weakSelf = self;
     [self.player addPeriodicTimeObserverForInterval:CMTimeMake(3, 30) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
         weakSelf.current_time =  CMTimeGetSeconds(time);
-        NSLog(@"%f", CMTimeGetSeconds(time));
+        //NSLog(@"%f", CMTimeGetSeconds(time));
     }];
     
     self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
@@ -75,17 +75,18 @@
     
 }
 
-
-//- (void)setPlayer:(AVPlayer *)player{
-//    if (!_player) _player = player;
-//    
-//}
-//- (void)setPlayerItem:(AVPlayerItem *)playerItem{
-//    if (!_playerItem) _playerItem = playerItem;
-//}
-//- (void)setPlayerLayer:(AVPlayerLayer *)playerLayer{
-//    if (!_playerLayer) _playerLayer = playerLayer;
-//}
+- (void)setState:(SBVideoPlayerState)state{
+    _state = state;
+    if (state==SBVideoPlayerStatePlaying) {
+        NSLog(@"SBVideoPlayerStatePlaying");
+    }
+    if (state==SBVideoPlayerStatePause) {
+        NSLog(@"SBVideoPlayerStatePause");
+    }
+    if (state==SBVideoPlayerStateStalled) {
+        NSLog(@"SBVideoPlayerStateStalled");
+    }
+}
 
 
 - (void)creatContainerView{
@@ -112,6 +113,7 @@
         if (status==AVPlayerStatusReadyToPlay) {
             NSLog(@"AVPlayerStatusReadyToPlay");
             [[NSNotificationCenter defaultCenter]postNotificationName:@"SBVideoIsGoingToPlay" object:object userInfo:nil];
+            [self play];
         }
         if (status==AVPlayerStatusFailed) {
             NSLog(@"AVPlayerStatusFailed");
@@ -121,28 +123,31 @@
         
         NSArray*array = _playerItem.loadedTimeRanges;
         
-        NSLog(@"array = %@", array);
-        
         CMTimeRange timeRange = [array.firstObject CMTimeRangeValue];
         
         float startSeconds =CMTimeGetSeconds(timeRange.start);
-        
         float durationSeconds =CMTimeGetSeconds(timeRange.duration);
         
         //缓冲总长度
         
         float totalBuffer = startSeconds + durationSeconds;
         self.current_loaded_time = totalBuffer;
+        
+        if (_current_loaded_time-_current_time>5.0&&_state==SBVideoPlayerStateStalled) {
+            [self play];
+        }
         NSLog(@"共缓存：%.2f",totalBuffer);
         
     }else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"]){
-        
+
+        if (_playerItem.playbackLikelyToKeepUp&&_state==SBVideoPlayerStateStalled) {
+            [self play];
+        }
+
         BOOL status = [[change objectForKey:@"new"] intValue];
         if (status && _state==SBVideoPlayerStatePause){
             NSLog(@"playbackLikelyToKeepUp");
-            //[self play];
         }
-
     }
 }
 
@@ -151,10 +156,7 @@
 }
 
 - (void)unablePlay{
-    
-    _state = SBVideoPlayerStatePause;
-    
-    NSLog(@"不可播放了");
+    self.state = SBVideoPlayerStateStalled;
 }
 
 - (void)playToEnd{
@@ -164,14 +166,12 @@
 
 
 - (void)play{
+    self.state = SBVideoPlayerStatePlaying;
     [_player play];
-    _state = SBVideoPlayerStatePlaying;
-    
-    
 }
 - (void)pause{
+    self.state = SBVideoPlayerStatePause;
     [_player pause];
-    _state = SBVideoPlayerStatePause;
 }
 
 

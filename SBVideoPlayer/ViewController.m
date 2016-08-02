@@ -30,6 +30,9 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    
+    NSLog(@"放");
+    
     if (!videoPlayer) {
         videoPlayer = [[SBVideoPlayer alloc]initWithURL:[NSURL URLWithString:video_url_str]];
         videoPlayer.backgroundColor = [UIColor blackColor];
