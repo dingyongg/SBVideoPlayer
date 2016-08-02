@@ -106,7 +106,7 @@
     
     //计数器
     self.counttingTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countting) userInfo:nil repeats:YES];
-    //[_counttingTimer fire];
+ 
     self.index = 0;
   
 }
@@ -114,21 +114,14 @@
 - (void)SBVideoIsGoingToPlay{
     
     
-    
-    
 }
-
 
 - (void)progressViewValueDidChanged:(UISlider *)slider{
     
     Float64 totalSeconds = CMTimeGetSeconds(_player.playerItem.duration);
     
     CMTime time = CMTimeMakeWithSeconds(totalSeconds * slider.value, _player.playerItem.duration.timescale);
-    
-    //[self displayProgress:slider.value];
     [self seekToCMTime:time];
-    //[_player.player seekToTime:time];
-
 }
 
 
@@ -141,12 +134,10 @@
     [_player.player seekToTime:time completionHandler:^(BOOL finished) {
         if (_player.state==SBVideoPlayerStatePlaying && finished){
             [_player play];
+            [self starCountting];
         }
     }];
 }
-
-
-
 
 - (void)playbackButtonAction:(SBPlaybackButton *)button{
     
@@ -230,17 +221,22 @@
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event{
-    [self touchBeganHandlingWithEvent:event];
+    
+    if (CGRectContainsPoint(_containerV.frame, point)) {
+        [self touchBeganHandlingWithEvent:event];
+        [self starCountting];
+    }
+
     return [super hitTest:point withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    self.counttingTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countting) userInfo:nil repeats:YES];
+    [self starCountting];
 }
 
 - (void)showBottomControllBarAnimated:(BOOL)animated{
      if (_containerV.alpha>=1) return;
-    self.counttingTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countting) userInfo:nil repeats:YES];
+    [self starCountting];
     [UIView animateWithDuration:animated?.4:0 animations:^{
         _containerV.alpha = 1.0;
     }];
@@ -278,7 +274,9 @@
     
 }
 
-
+- (void)starCountting{
+    self.counttingTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countting) userInfo:nil repeats:YES];
+}
 - (void)countting{
     _index++;
     if (_index>=4) {
