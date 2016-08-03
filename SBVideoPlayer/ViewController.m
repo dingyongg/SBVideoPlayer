@@ -6,7 +6,7 @@
 //  Copyright © 2016年 bigbomac02. All rights reserved.
 //
 
-#define video_url_str @"http://test.starbuyer.com/upload/2016/06/29/1467193552.mp4"
+#define video_url_str @"https://www.starbuyer.com//upload/2016/05/27/1464330352.mp4"
 
 #import "ViewController.h"
 
@@ -24,7 +24,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SBVideoIsGoingToPlay) name:@"SBVideoIsGoingToPlay" object:nil];
 }
@@ -46,7 +45,7 @@
 
 
 - (void)SBVideoIsGoingToPlay{
-    
+
     NSLog(@"SBVideoIsGoingToPlay");
     
     

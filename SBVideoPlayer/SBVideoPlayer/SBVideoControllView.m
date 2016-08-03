@@ -36,6 +36,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SBVideoIsGoingToPlay) name:@"SBVideoIsGoingToPlay" object:nil];
         self.player = player;
         [self initBottomLayout];
+        
     }
     return self;
 }
@@ -78,6 +79,7 @@
     _currentTimeLabel.font = [UIFont systemFontOfSize:13];
     _currentTimeLabel.textColor = [UIColor whiteColor];
     _currentTimeLabel.textAlignment = NSTextAlignmentCenter;
+    _currentTimeLabel.text = @"00:00";
     [_containerV addSubview:_currentTimeLabel];
     
     //进度条
@@ -95,25 +97,26 @@
     _remainTimeLabel.font = [UIFont systemFontOfSize:13];
     _remainTimeLabel.textColor = [UIColor whiteColor];
     _remainTimeLabel.textAlignment = NSTextAlignmentCenter;
+    _remainTimeLabel.text = @"-00:00";
     [_containerV addSubview:_remainTimeLabel];
     [self addSubview:_containerV];
+    [self hideBottomControllBarAnimated:NO];
     
     //菊花
     _activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     [_activityIndicator startAnimating];
     [self addSubview:_activityIndicator];
-    
-    
+
     //计数器
     self.counttingTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(countting) userInfo:nil repeats:YES];
  
     self.index = 0;
-  
 }
 
 - (void)SBVideoIsGoingToPlay{
-    
-    
+    NSString *text = [self timeStringWithTime:CMTimeGetSeconds(_player.playerItem.duration)];
+    _remainTimeLabel.text = [NSString stringWithFormat:@"-%@", text];
+    [self showBottomControllBarAnimated:YES];
 }
 
 - (void)progressViewValueDidChanged:(UISlider *)slider{
@@ -181,7 +184,6 @@
     
     if ([keyPath isEqualToString:@"state"]) {
 
-        
         if (_player.state == SBVideoPlayerStatePlaying) {
             [_activityIndicator stopAnimating];
             _playbackButton.playState = 1;
@@ -270,7 +272,6 @@
             [self playbackButtonAction:_playbackButton];
         }
     }
-    
     
 }
 

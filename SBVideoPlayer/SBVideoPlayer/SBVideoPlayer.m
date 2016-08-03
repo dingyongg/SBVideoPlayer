@@ -53,7 +53,7 @@
     self.playerItem  = [AVPlayerItem playerItemWithURL:URL];
     self.player = [AVPlayer playerWithPlayerItem:_playerItem];
     self.state = SBVideoPlayerStateStalled;
-    
+    [self.player pause];
     __weak SBVideoPlayer *weakSelf = self;
     [self.player addPeriodicTimeObserverForInterval:CMTimeMake(3, 30) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
         weakSelf.current_time =  CMTimeGetSeconds(time);
